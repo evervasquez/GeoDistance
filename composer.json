@@ -13,10 +13,9 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations"
         ],
         "psr-0": {
-            "Evasquez\\Geodistance\\": "src/"
+            "Evasquez\\GeoDistance\\": "src/"
         }
     },
     "minimum-stability": "stable"

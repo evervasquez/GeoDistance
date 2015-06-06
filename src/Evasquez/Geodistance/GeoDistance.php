@@ -17,7 +17,7 @@
  *
  */
 
-namespace Evasquez\Geodistance;
+namespace Evasquez\GeoDistance;
 
 
 trait GeoDistance
