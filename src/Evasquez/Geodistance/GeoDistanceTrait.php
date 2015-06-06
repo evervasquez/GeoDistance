@@ -20,7 +20,7 @@
 namespace Evasquez\GeoDistance;
 
 
-trait GeoDistance
+trait GeoDistanceTrait
 {
     protected $latColumn = 'latitude';
 
