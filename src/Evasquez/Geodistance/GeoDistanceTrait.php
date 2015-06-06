@@ -127,7 +127,7 @@ trait GeoDistanceTrait
         // Paramater bindings havent been used as it would need to be within a DB::select which would run straight away and return its result, which we dont want as it will break the query builder.
         // This method should work okay as our values have been cooerced into correct types and quoted with pdo.
 
-        $query = "SELECT id, ( " . $meanRadius . " * acos( cos( radians(" . $lat . ") ) * cos( radians('" . $latColumn . "') ) * cos( radians( '" . $lngColumn . "' ) - radians(" . $lng . ") ) + sin( radians(" . $lat . ") ) * sin( radians( '" . $latColumn . "' ) ) ) ) AS distance
+        $query = "SELECT id, ( $meanRadius  * acos( cos( radians($lat) ) * cos( radians($latColumn) ) * cos( radians( $lngColumn ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( $latColumn ) ) ) ) AS distance
         FROM " . $table . " HAVING distance < " . $distance;
 
         return $q->select(DB::raw($query));
