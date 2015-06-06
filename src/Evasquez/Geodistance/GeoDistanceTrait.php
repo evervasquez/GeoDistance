@@ -20,6 +20,8 @@
 namespace Evasquez\GeoDistance;
 
 
+use Illuminate\Support\Facades\DB;
+
 trait GeoDistanceTrait
 {
     protected $latColumn = 'latitude';
@@ -128,7 +130,7 @@ trait GeoDistanceTrait
         $query = "SELECT id, ( " . $meanRadius . " * acos( cos( radians(" . $lat . ") ) * cos( radians('" . $latColumn . "') ) * cos( radians( '" . $lngColumn . "' ) - radians(" . $lng . ") ) + sin( radians(" . $lat . ") ) * sin( radians( '" . $latColumn . "' ) ) ) ) AS distance
         FROM " . $table . " HAVING distance < " . $distance;
 
-        return $q->select(\DB::raw($query));
+        return $q->select(DB::raw($query));
 
     }
 
