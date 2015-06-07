@@ -104,7 +104,7 @@ trait GeoDistanceTrait
      * credit - https://developers.google.com/maps/articles/phpsqlsearch_v3
      **/
 
-    public function scopeWithin($q, $distance, $measurement = null, $lat = null, $lng = null, $table = 'locations')
+    public function scopeWithin($query, $distance, $measurement = null, $lat = null, $lng = null, $table = 'locations')
     {
         $pdo = DB::connection()->getPdo();
 
@@ -127,14 +127,11 @@ trait GeoDistanceTrait
         // Paramater bindings havent been used as it would need to be within a DB::select which would run straight away and return its result, which we dont want as it will break the query builder.
         // This method should work okay as our values have been cooerced into correct types and quoted with pdo.
 
-        $query = "SELECT id, ( $meanRadius  * acos( cos( radians($lat) ) * cos( radians($latColumn) ) * cos( radians( $lngColumn ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( $latColumn ) ) ) ) AS distance
-        FROM " . $table . " HAVING distance < " . $distance;
-
-        return $q->select(DB::raw($query));
+        return $query->where(DB::raw("( $meanRadius  * acos( cos( radians($lat) ) * cos( radians($latColumn) ) * cos( radians( $lngColumn ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( $latColumn ) ) ) )"),"<",$distance);
 
     }
 
-    public function scopeOutside($q, $distance, $measurement = null, $lat = null, $lng = null)
+    public function scopeOutside($query, $distance, $measurement = null, $lat = null, $lng = null)
     {
         $pdo = DB::connection()->getPdo();
 
@@ -151,8 +148,7 @@ trait GeoDistanceTrait
         $lng = $pdo->quote(floatval($lng));
         $meanRadius = $pdo->quote(floatval($meanRadius));
 
-        return $q->select(DB::raw("*, ( $meanRadius * acos( cos( radians($lat) ) * cos( radians( $latColumn ) ) * cos( radians( $lngColumn ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( $latColumn ) ) ) ) AS distance"))
-            ->having('distance', '>=', $distance)
-            ->orderby('distance', 'ASC');
+        return $query->where(DB::raw("( $meanRadius  * acos( cos( radians($lat) ) * cos( radians($latColumn) ) * cos( radians( $lngColumn ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( $latColumn ) ) ) )"),">=",$distance);
     }
+
 }
