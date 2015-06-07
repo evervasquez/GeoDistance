@@ -1,4 +1,4 @@
-<?php namespace Evasquez\GeoDistance;
+<?php namespace Evasquez\Geodistance;
 
 use Exception;
 

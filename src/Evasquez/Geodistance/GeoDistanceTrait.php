@@ -17,7 +17,7 @@
  *
  */
 
-namespace Evasquez\GeoDistance;
+namespace Evasquez\Geodistance;
 
 
 use Illuminate\Support\Facades\DB;

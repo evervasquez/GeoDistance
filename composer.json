@@ -15,7 +15,7 @@
         "classmap": [
         ],
         "psr-0": {
-            "Evasquez\\GeoDistance\\": "src/"
+            "Evasquez\\Geodistance\\": "src/"
         }
     },
     "minimum-stability": "stable"
